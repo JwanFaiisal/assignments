@@ -5,7 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 
-public class T3 {
+public class TaskDriveManage {
     public static void main(String[] args) throws InterruptedException {
         // 1.
         WebDriver driver = new ChromeDriver();
