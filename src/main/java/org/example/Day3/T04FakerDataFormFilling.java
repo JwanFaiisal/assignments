@@ -63,9 +63,7 @@ public class T04FakerDataFormFilling {
             String permenantAdress = faker.address().fullAddress();
             System.out.println("permenantAdress = " + permenantAdress);
             driver.findElement(By.id("permanentAddress")).sendKeys(permenantAdress);
-            //driver.findElement(By.id("permanentAddress")).submit();
-            //        Submit the form and verify the output contains the entered data
-            //driver.findElement(By.id("submit")).submit();
+
             driver.findElement(By.id("submit")).click();
 
             WebElement output = driver.findElement(By.id("output"));
@@ -76,14 +74,14 @@ public class T04FakerDataFormFilling {
         }
 
         @BeforeEach
-        void setUp() {
+        void beforeEach() {
             driver= new ChromeDriver();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             driver.manage().window().maximize();
         }
 
         @AfterEach
-        void tearDown() {
+        void afterEach() {
             driver.quit();
         }
     }
