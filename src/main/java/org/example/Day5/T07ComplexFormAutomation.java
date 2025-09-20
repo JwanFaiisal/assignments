@@ -1,4 +1,4 @@
-package org.example.Day3;
+package org.example.Day5;
 
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;

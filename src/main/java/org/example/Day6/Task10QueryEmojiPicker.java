@@ -1,4 +1,4 @@
-package org.example.Day4;
+package org.example.Day6;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;

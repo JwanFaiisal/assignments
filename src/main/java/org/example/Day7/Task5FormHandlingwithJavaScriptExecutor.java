@@ -1,4 +1,4 @@
-package org.example.Day4;
+package org.example.Day7;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
