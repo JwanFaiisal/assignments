@@ -27,7 +27,7 @@ public class Task5SoftAssertionsPractice {
     public void negativeLoginTest() {
         driver.get(url);
 
-        // 1.
+        // 1
         driver.findElement(By.id("username")).sendKeys("wronguser");
         driver.findElement(By.id("password")).sendKeys("wrongpass");
 

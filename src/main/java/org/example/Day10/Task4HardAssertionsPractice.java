@@ -24,7 +24,7 @@ public class Task4HardAssertionsPractice {
 
     @Test(description = "Positive login test with hard assertions")
     public void positiveLoginTest() {
-        // 1.
+        // 1
         driver.get(url);
 
         // 2.
