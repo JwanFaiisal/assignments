@@ -17,7 +17,6 @@ public class Task4HardAssertionsPractice {
 
     @BeforeClass
     public void setUp() {
-        // افتح المتصفح وجهزه للاختبار
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(7));
         driver.manage().window().maximize();
@@ -25,25 +24,24 @@ public class Task4HardAssertionsPractice {
 
     @Test(description = "Positive login test with hard assertions")
     public void positiveLoginTest() {
-        // 1. افتح الرابط
+        // 1.
         driver.get(url);
 
-        // 2. أدخل اسم المستخدم
+        // 2.
         driver.findElement(By.id("username")).sendKeys("admin");
 
-        // 3. أدخل كلمة المرور
+        // 3.
         driver.findElement(By.id("password")).sendKeys("123");
 
-        // 4. اضغط زر Submit (Sign In)
+        // 4.
         driver.findElement(By.cssSelector("input[type='submit']")).click();
 
-        // 5. تحقق من الرابط بعد تسجيل الدخول
+        // 5.
         String expectedUrl = "https://claruswaysda.github.io/signIn.html";
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl,
                 "❌ The page URL after login is NOT as expected!");
 
-        // تحقق من وجود النص "Employee Table"
         boolean containsEmployeeTable = driver.getPageSource().contains("Employee Table");
         Assert.assertTrue(containsEmployeeTable,
                 "❌ The page does NOT contain the text 'Employee Table' after login.");
@@ -51,7 +49,6 @@ public class Task4HardAssertionsPractice {
 
     @AfterClass
     public void tearDown() {
-        // اغلق المتصفح بعد انتهاء الاختبار
         if (driver != null) {
             driver.quit();
         }

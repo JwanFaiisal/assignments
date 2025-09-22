@@ -27,39 +27,36 @@ public class Task5SoftAssertionsPractice {
     public void negativeLoginTest() {
         driver.get(url);
 
-        // 1. إدخال بيانات خاطئة
+        // 1.
         driver.findElement(By.id("username")).sendKeys("wronguser");
         driver.findElement(By.id("password")).sendKeys("wrongpass");
 
-        // 2. الضغط على زر Sign In
+        // 2.
         driver.findElement(By.cssSelector("input[type='submit']")).click();
 
         // SoftAssert object
         SoftAssert softAssert = new SoftAssert();
 
         try {
-            // 3. انتظار ظهور الـ Alert
+            // 3.
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
             Alert alert = wait.until(ExpectedConditions.alertIsPresent());
 
-            // 4. التحقق أن الـ Alert موجود
-            softAssert.assertNotNull(alert, "❌ Expected an alert, but none appeared.");
+            // 4.
+            softAssert.assertNotNull(alert, " Expected an alert, but none appeared.");
 
-            // 5. التحقق من نص الرسالة
+            // 5.
             String actualAlertText = alert.getText();
             String expectedAlertText = "Incorrect username or password";
             softAssert.assertEquals(actualAlertText, expectedAlertText,
-                    "❌ Alert text is NOT as expected!");
+                    " Alert text is NOT as expected!");
 
-            // إغلاق الـ Alert
             alert.accept();
 
         } catch (Exception e) {
-            // لو ما ظهر Alert → نعتبرها فشل بالـ soft assert
-            softAssert.fail("❌ No alert appeared after submitting wrong credentials. Exception: " + e.getMessage());
+            softAssert.fail("No alert appeared after submitting wrong credentials. Exception: " + e.getMessage());
         }
 
-        // لازم دايمًا نستدعي assertAll عشان تطبع نتيجة كل SoftAssert
         softAssert.assertAll();
     }
 
