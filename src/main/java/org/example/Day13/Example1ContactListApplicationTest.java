@@ -74,4 +74,7 @@ public class Example1ContactListApplicationTest {
     public void tearDown() {
         Driver.closeDriver();
     }
+
+    public static class Example2BankingApplicationTest {
+    }
 }
