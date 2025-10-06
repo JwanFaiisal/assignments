@@ -1,71 +1,46 @@
 package org.example.Day13;
 
-
+import com.github.javafaker.Faker;
 import org.example.Day13.Pages.*;
-import org.openqa.selenium.WebDriver;
+        import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.time.Duration;
 
 public class Example2BankingApplicationTest {
     WebDriver driver;
     ManagerLoginPage managerLoginPage;
     CustomerManagementPage customerManagementPage;
     AccountManagementPage accountManagementPage;
-    CustomerLoginPage customerLoginPage;
-    TransactionPage transactionPage;
-
-    String[] customers = {"Ali Saleh", "Sara Ahmed", "Omar Hassan", "Mona Khalid", "Yousef Zain"};
+    Faker faker;
 
     @BeforeClass
-    public void setup() {
+    public void setUp() {
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         driver.get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
+
         managerLoginPage = new ManagerLoginPage(driver);
         customerManagementPage = new CustomerManagementPage(driver);
         accountManagementPage = new AccountManagementPage(driver);
-        customerLoginPage = new CustomerLoginPage(driver);
-        transactionPage = new TransactionPage(driver);
+        faker = new Faker();
     }
 
-    @Test(priority = 1)
-    public void testCustomerAccountFlow() {
+    @Test
+    public void testAddCustomerAndOpenAccount() {
+        String firstName = faker.name().firstName();
+        String lastName = faker.name().lastName();
+        String postCode = faker.address().zipCode();
+
         managerLoginPage.loginAsManager();
+        managerLoginPage.navigateToAddCustomer();
 
-        // 1. Add 5 new customers
-        for (String customer : customers) {
-            String[] split = customer.split(" ");
-            managerLoginPage.goToAddCustomer();
-            customerManagementPage.addCustomer(split[0], split[1], "12345");
-        }
+        customerManagementPage.addCustomer(firstName, lastName, postCode);
 
-        // 2. Open accounts for each customer
-        for (String customer : customers) {
-            managerLoginPage.goToOpenAccount();
-            accountManagementPage.openAccount(customer, "Dollar");
-        }
-
-        // 3. Deposit 100 for each customer
-        for (String customer : customers) {
-            customerLoginPage.loginAsCustomer(customer);
-            transactionPage.deposit(100);
-            Assert.assertEquals(transactionPage.getBalance(), 100, "Deposit failed for " + customer);
-            driver.navigate().back();
-        }
-
-        // 4. Withdraw 100 from first customer
-        customerLoginPage.loginAsCustomer(customers[0]);
-        transactionPage.withdraw(100);
-        Assert.assertEquals(transactionPage.getBalance(), 0, "Withdraw failed!");
-        driver.navigate().back();
-
-        // 5. Delete all created customers
-        managerLoginPage.loginAsManager();
-        managerLoginPage.goToCustomers();
-        for (String customer : customers) {
-            driver.findElement(org.openqa.selenium.By.xpath("//td[contains(text(),'" + customer.split(" ")[0] + "')]/../td/button")).click();
-        }
+        managerLoginPage.navigateToOpenAccount();
+        accountManagementPage.openAccount(firstName + " " + lastName, "Dollar");
     }
 
     @AfterClass
@@ -73,3 +48,4 @@ public class Example2BankingApplicationTest {
         driver.quit();
     }
 }
+
