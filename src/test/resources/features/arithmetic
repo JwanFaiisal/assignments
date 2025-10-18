@@ -1,0 +1,23 @@
+Feature: Arithmetic Operations
+  As a user
+  I want to perform simple arithmetic operations
+  So that I can verify the calculator works correctly
+
+  @smoke @positive
+  Scenario: Addition of two positive numbers
+    Given the calculator is open
+    When the user adds 5 and 7
+    Then the result should be 12
+
+  @negative
+  Scenario: Subtraction resulting in a negative number
+    Given the calculator is open
+    When the user subtracts 10 from 5
+    Then the result should be -5
+
+  @negative
+  Scenario: Division by zero (error case)
+    Given the calculator is open
+    When the user divides 10 by 0
+    Then an error message should be displayed
+    But the calculator should not crash
